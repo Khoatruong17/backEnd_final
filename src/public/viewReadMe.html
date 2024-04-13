@@ -1,0 +1,190 @@
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+    <title>TesterBackEnd</title>
+    <meta name="generator" content="Jekyll v3.9.5">
+    <meta property="og:title" content="TesterBackEnd">
+    <meta property="og:locale" content="en_US">
+    <link rel="canonical" href="https://khoatruong17.github.io/TesterBackEnd/">
+    <meta property="og:url" content="https://khoatruong17.github.io/TesterBackEnd/">
+    <meta property="og:site_name" content="TesterBackEnd">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta property="twitter:title" content="TesterBackEnd">
+    <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","headline":"TesterBackEnd","name":"TesterBackEnd","url":"https://khoatruong17.github.io/TesterBackEnd/"}</script>
+    <!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/TesterBackEnd/assets/css/style.css?v=171ea651a0a966ac6c95bea82eb7183cf96ca319">
+    <!-- start custom head snippets, customize with your own _includes/head-custom.html file -->
+
+    <!-- Setup Google Analytics -->
+
+
+
+    <!-- You can set your favicon here -->
+    <!-- link rel="shortcut icon" type="image/x-icon" href="/TesterBackEnd/favicon.ico" -->
+
+    <!-- end custom head snippets -->
+
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1167.0" data-gr-ext-installed="">
+    <div class="container-lg px-3 my-5 markdown-body">
+
+        <h1><a href="https://khoatruong17.github.io/TesterBackEnd/">TesterBackEnd</a></h1>
+
+
+        <ul>
+            <li>Command start: npm run dev</li>
+            <li>localhost: 8081</li>
+        </ul>
+
+        <p>Dash Broad</p>
+
+        <ul>
+            <li>Dash broad for Admin —-&gt; GET http://localhost:8081/v1/dashbroadAdmin</li>
+            <li>Dash broad for Coordinator —-&gt; GET http://localhost:8081/v1/dashbroadCoordinator</li>
+        </ul>
+
+        <p>Login/Register</p>
+
+        <ul>
+            <li>Login ———&gt; POST http://localhost:8081/v1/login (checked)</li>
+            <li>Register ———&gt; POST http://localhost:8081/v1/register (checked)
+                —&gt; Yêu cầu password:</li>
+            <li>Có 1 chữ cái hoa,</li>
+            <li>Dài hơn 8 kí tự,</li>
+            <li>Có 1 kí tự đặc biệt</li>
+            <li>Phải có ít nhất 1 số trong mk</li>
+            <li>Logout ———&gt; POST http://localhost:8081/v1/logout</li>
+        </ul>
+
+        <p>User:</p>
+
+        <ul>
+            <li>Get Data 1 user ———&gt; GET http://localhost:8081/v1/user/getData —&gt; truyền vào id của user (checked)
+            </li>
+            <li>
+                <p>Get All Users ———&gt; GET http://localhost:8081/v1/user/read —&gt; Filter (role_id, faculty_id)
+                    (checked)
+                    Nếu không truyền sẽ show tất cả user. Nếu truyền thì sẽ show user có role hoặc faculty tương ứng</p>
+            </li>
+            <li>Edit info User ———&gt; PUT http://localhost:8081/v1/user/update —&gt; truyền vào user_id (có thể edit:
+                username, image, faculty_id)</li>
+            <li>
+                <p>Change Password ———&gt; PUT http://localhost:8081/v1/user/updatePassword
+                    —&gt; truyền vào id, current password, new password, confirm password
+                    —&gt; Yêu cầu:
+                    Có 1 chữ cái hoa, dài hơn 8 kí tự, có 1 kí tự đặc biệt, phải có ít nhất 1 số trong mk</p>
+            </li>
+            <li>Delete Users ———&gt; DELETE http://localhost:8081/v1/user/delete —&gt; truyền vào user_id và password
+                của user (checked)</li>
+        </ul>
+
+        <p>Comment:</p>
+
+        <ul>
+            <li>Get ALL Comment —-&gt; GET http://localhost:8081/v1/comment/readAll</li>
+            <li>Add Comment —-&gt; POST http://localhost:8081/v1/comment/create</li>
+            <li>Delete Comment —-&gt; DELETE http://localhost:8081/v1/comment/delete/(id)</li>
+        </ul>
+
+        <p>Comments for Student (Không trả về time)</p>
+
+        <ul>
+            <li>Get Comment for Student —-&gt; GET http://localhost:8081/v1/commentforS/read —&gt; truyền vào
+                contribution_id</li>
+        </ul>
+
+        <p>Comments for Coordinator (Trả về time còn lại)</p>
+
+        <ul>
+            <li>Get Comment for Coordinator —-&gt; GET http://localhost:8081/v1/commentforC/read —&gt; truyền vào
+                contribution_id</li>
+        </ul>
+
+        <p>Contributions:</p>
+
+        <ul>
+            <li>Create new contribution ——&gt; POST http://localhost:8081/v1/contribution/create
+                (requirements: topic_id, name, description, file in body)</li>
+            <li>Show contribution for Faculty ——&gt; GET http://localhost:8081/v1/contribution/readbyfaculty
+                *(truyền vào contributions_id, và status(0,1,2))</li>
+            <li>Show contribution for Guest ——&gt; GET http://localhost:8081/v1/contribution/readforGuest</li>
+            <li>Show contribution for Student ——&gt; GET http://localhost:8081/v1/contribution/readforStudent</li>
+            <li>Get All Contributors ——-&gt; GET http://localhost:8081/v1/contribution/read</li>
+            <li>Download Contribution ——-&gt; GET http://localhost:8081/v1/contribution/download/id</li>
+            <li>Delete Contribution —-&gt; DELETE http://localhost:8081/v1/contribution/delete/:id</li>
+        </ul>
+
+        <p>Faculty:</p>
+
+        <ul>
+            <li>Get ALL Faculty —-&gt; GET http://localhost:8081/v1/faculty/readAll</li>
+            <li>Add Faculty —-&gt; POST http://localhost:8081/v1/faculty/create</li>
+            <li>Delete Faculty —-&gt; DELETE http://localhost:8081/v1/faculty/delete/id</li>
+            <li>Update Faculty —-&gt; PUT http://localhost:8081/v1/faculty/update/id</li>
+        </ul>
+
+        <p>Group:</p>
+
+        <ul>
+            <li>Get ALL Group —-&gt; GET http://localhost:8081/v1/group/readAll</li>
+            <li>Add Group —-&gt; POST http://localhost:8081/v1/group/create</li>
+            <li>Delete Group —-&gt; DELETE http://localhost:8081/v1/group/delete/id</li>
+            <li>Update Group —-&gt; PUT http://localhost:8081/v1/group/upadte/id</li>
+        </ul>
+
+        <p>Role:</p>
+
+        <ul>
+            <li>Add Role —-&gt; POST http://localhost:8081/v1/role/create</li>
+            <li>GetAll Role —-&gt; GET http://localhost:8081/v1/role/readAll</li>
+        </ul>
+
+        <p>Topic:</p>
+
+        <ul>
+            <li>Create new topic —-&gt; POST http://localhost:8081/v1/topic/create</li>
+            <li>Get All Topic —-&gt; GET http://localhost:8081/v1/topic/readAll</li>
+            <li>Delete Topic —-&gt; DELETE http://localhost:8081/v1//topic/delete/id</li>
+        </ul>
+
+        <p>Group with Role:</p>
+
+        <ul>
+            <li>Add —-&gt; POST http://localhost:8081/v1/grouprole</li>
+        </ul>
+
+        <p>Upload files</p>
+
+        <ul>
+            <li>Upload Single File —-&gt; POST http://localhost:8081/v1/file/single (ko dung)</li>
+            <li>Upload Multiple File —-&gt; POST http://localhost:8081/v1/file/multiple (ko dung)</li>
+        </ul>
+
+        <p>sendMail</p>
+
+        <ul>
+            <li>Send Email —-&gt; POST http://localhost:8081/v1/sendmail</li>
+        </ul>
+
+        <p>//</p>
+
+
+
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.0/anchor.min.js"
+        integrity="sha256-lZaRhKri35AyJSypXXs4o6OPFTbTmUoltBbDCbdzegg=" crossorigin="anonymous"></script>
+    <script>anchors.add();</script>
+
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+
+</html>
