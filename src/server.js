@@ -13,7 +13,7 @@ const connection = require("./config/database");
 
 const app = express();
 const port = process.env.PORT || 10000;
-const hostname = process.env.HOST_NAME;
+//const hostname = process.env.HOST_NAME;
 
 // Middleware
 app.use(morgan("dev")); // Logging middleware
@@ -44,12 +44,11 @@ app.use((req, res) => {
   return res.send("404 Not Found");
 });
 
-app.listen(port, hostname, async () => {
+app.listen(port, async () => {
   try {
-    // Kiểm tra kết nối cơ sở dữ liệu
     await connection();
-    console.log(`App is running at http://${hostname}:${port}/`);
+    console.log(`App listening on port ${port}`);
   } catch (err) {
-    console.log(">>> Lỗi khi khởi động máy chủ: " + err);
+    console.log(">>> Error on port: " + err);
   }
 });
