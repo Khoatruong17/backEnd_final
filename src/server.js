@@ -47,8 +47,8 @@ app.use((req, res) => {
 app.listen(port, async () => {
   try {
     await connection();
-    console.log(`App listening on port ${port}`);
+    console.log(`App is running at ${port}`);
   } catch (err) {
-    console.log(">>> Error on port: " + err);
+    console.log(">>> Err when starting server: " + err);
   }
 });
