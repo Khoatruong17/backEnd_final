@@ -13,15 +13,12 @@ const connection = require("./config/database");
 
 const app = express();
 const port = process.env.PORT || 10000;
-//const hostname = process.env.HOST_NAME;
 
 // Middleware
 app.use(morgan("dev")); // Logging middleware
 app.use(bodyParser.json());
-// app.use(express.json());
-// app.use(cookieParser());
 app.use(fileUpload());
-app.use(cors());
+app.use(cors()); // Place CORS middleware here
 
 // Set view engine
 configViewEngine(app);
@@ -29,7 +26,7 @@ configViewEngine(app);
 // Setup routes
 apiRouter(app);
 
-// CORS setup
+// CORS setup (Moved up before any routes)
 app.use(function (req, res, next) {
   res.header(
     "Access-Control-Allow-Origin",
