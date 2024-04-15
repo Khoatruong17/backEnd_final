@@ -281,7 +281,7 @@ const showcontributionForStudent = async (req, res) => {
       throw new Error("Contribution not found (find by faculty_id)");
     }
     for (const item of contribution) {
-      const topic = await Topic.findById(item.topic_id).exec(); // Sử dụng exec() để đảm bảo trả về một promise
+      const topic = await Topic.findById(item.topic_id).exec();
       if (!topic) {
         throw new Error("Topic not found");
       }
