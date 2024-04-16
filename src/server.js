@@ -27,17 +27,28 @@ configViewEngine(app);
 apiRouter(app);
 
 // CORS setup (Moved up before any routes)
+// app.use(function (req, res, next) {
+//   res.header(
+//     "Access-Control-Allow-Origin",
+//     "https://vue-project-tu.vercel.app"
+//   );
+
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+
+//   res.header("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
+
 app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://vue-project-tu.vercel.app"
-  );
+  res.header("Access-Control-Allow-Origin", "*");
 
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
-
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
