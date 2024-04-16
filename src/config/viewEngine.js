@@ -11,7 +11,7 @@ const configViewEngine = (app) => {
   app.use(express.static(path.join("./src", "public")));
   app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: "vue-project-tu.vercel.app",
       credentials: true,
     })
   );
