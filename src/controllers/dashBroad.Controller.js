@@ -28,8 +28,8 @@ const dashBroadCoordinator = async (req, res) => {
     if (!decoded) {
       return res.status(400).send("Invalid cookie. Please Login!!!");
     }
-    let data = await dashBroadService.dashBroadCoordinator(decoded);
-    return res.status(data.status).json({
+    let data = await dashBroadService.dashBroadCoordinator(req.body, decoded);
+    return res.status(200).json({
       EM: data.EM,
       EC: data.EC,
       DT: data.DT,
