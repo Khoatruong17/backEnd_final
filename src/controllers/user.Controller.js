@@ -11,7 +11,7 @@ const checkUsername = async (username) => {
 };
 const getdataUser = async (req, res) => {
   try {
-    const user = await UserModel.find(req.body.user_id);
+    const user = await UserModel.findById(req.body.user_id);
     if (!user) {
       return res.status(404).json({
         EM: "User not found",
