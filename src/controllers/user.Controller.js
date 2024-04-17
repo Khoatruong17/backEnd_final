@@ -30,7 +30,7 @@ const getdataUser = async (req, res) => {
     return res.status(200).json({
       EM: "Successfully",
       EC: 0,
-      DT: formattedUser,
+      DT: user,
     });
   } catch (error) {
     console.error(">>> Error getDataUser (controller)", error);
