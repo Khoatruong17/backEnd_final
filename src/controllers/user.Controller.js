@@ -157,9 +157,9 @@ const editUser = async (req, res) => {
 
 const updatePassword = async (req, res) => {
   try {
-    const { id, oldPassword, newPassword, confirmPassword } = req.body;
+    const { user_id, oldPassword, newPassword, confirmPassword } = req.body;
 
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findById(user_id);
     if (!user) {
       return res.status(404).json({
         EM: "User not found",
