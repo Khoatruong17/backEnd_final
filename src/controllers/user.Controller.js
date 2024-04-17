@@ -19,14 +19,7 @@ const getdataUser = async (req, res) => {
         DT: "",
       });
     }
-    const formattedUser = {
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      role: user.group.group_name,
-      faculty: user.faculty.faculty_name,
-      image: user.image,
-    };
+
     return res.status(200).json({
       EM: "Successfully",
       EC: 0,
