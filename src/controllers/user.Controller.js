@@ -11,7 +11,14 @@ const checkUsername = async (username) => {
 };
 const getdataUser = async (req, res) => {
   try {
-    const user = await UserModel.findById(req.body.id);
+    const user = await UserModel.find(req.body.user_id);
+    if (!user) {
+      return res.status(404).json({
+        EM: "User not found",
+        EC: 1,
+        DT: "",
+      });
+    }
     const formattedUser = {
       _id: user._id,
       username: user.username,
@@ -28,7 +35,7 @@ const getdataUser = async (req, res) => {
   } catch (error) {
     console.error(">>> Error getDataUser (controller)", error);
     return res.status(500).json({
-      EM: "GetDataUsers failed",
+      EM: `GetDataUsers failed due to error: ${error.message}`,
       EC: 1,
       DT: "",
     });
