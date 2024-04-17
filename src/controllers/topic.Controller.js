@@ -3,7 +3,12 @@ const TopService = require("../services/topic.Service");
 
 const createTopic = async (req, res) => {
   try {
-    let data = await TopService.createNewTopic(req.body);
+    const cookie = req.cookies;
+    if (!cookie || !cookie.jwt) {
+      return res.status(400).send("No cookies found. Please Login!!!");
+    }
+    const decoded = jwtAction.verifyToken(cookie.jwt);
+    let data = await TopService.createNewTopic(req.body, decoded);
     return res.status(200).json({
       EM: data.EM,
       EC: data.EC,
