@@ -120,7 +120,7 @@ const createContribution = async (req, res) => {
         "The deadline has passed, you can't submit your contribution anymore."
       );
     }
-    const email = "truongndkgch190486@fpt.edu.vn";
+    const email = "namdhgch190700@fpt.edu.vn";
 
     const filePath = await uploadFile.postUploadMultipleFiles(req);
     let documents = [];
