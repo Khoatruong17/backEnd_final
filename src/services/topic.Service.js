@@ -28,9 +28,14 @@ const checkName = async (topicName) => {
 
 const createNewTopic = async (requestData) => {
   try {
-    let cookies =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmI4ZWU0YmJjNGExODVkMmI3ZTUyMyIsImVtYWlsIjoibmFtYW5oQGdtYWlsLmNvbSIsImdyb3VwV2l0aFJvbGUiOnsic1JvbGVzIjpbeyJ1cmwiOiIvdXNlci9yZWFkIiwiZGVzY3JpcHRpb24iOiJHZXQgYWxsIHVzZXIifV0sImdyb3VwIjp7Il9pZCI6IjY1ZmFlNDRlODUwOTA1ZjA1ZjBlMjI4MCIsIm5vX2dyb3VwIjozLCJncm91cF9uYW1lIjoiTWFuYWdlciBDb29yZGluYXRvciAiLCJkZXNjcmlwdGlvbiI6IkNhbiBjb250cm9sIGFsbCBzZXJ2aWNlIGFib3V0IGNvbnRyaWJ1dGlvbnMgYXQgdGhpZXIgZmFjdWx0eSIsImNyZWF0ZWRBdCI6IjIwMjQtMDMtMjBUMTM6Mjc6NDIuOTQ5WiIsInVwZGF0ZWRBdCI6IjIwMjQtMDMtMjBUMTM6Mjc6NDIuOTQ5WiIsIl9fdiI6MH19LCJpYXQiOjE3MTE2MjY0MjZ9.d3F3AxmAAh_yzJuvBh5_2SwlNeMmQdU8f9phQScKYn8";
-    let decoded = jwtAction.verifyToken(cookies);
+    const cookie = req.cookies;
+    if (!cookie || !cookie.jwt) {
+      return res.status(400).send("No cookies found. Please Login!!!");
+    }
+    const decoded = jwtAction.verifyToken(cookie.jwt);
+    //let cookies =
+    ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZmI4ZWU0YmJjNGExODVkMmI3ZTUyMyIsImVtYWlsIjoibmFtYW5oQGdtYWlsLmNvbSIsImdyb3VwV2l0aFJvbGUiOnsic1JvbGVzIjpbeyJ1cmwiOiIvdXNlci9yZWFkIiwiZGVzY3JpcHRpb24iOiJHZXQgYWxsIHVzZXIifV0sImdyb3VwIjp7Il9pZCI6IjY1ZmFlNDRlODUwOTA1ZjA1ZjBlMjI4MCIsIm5vX2dyb3VwIjozLCJncm91cF9uYW1lIjoiTWFuYWdlciBDb29yZGluYXRvciAiLCJkZXNjcmlwdGlvbiI6IkNhbiBjb250cm9sIGFsbCBzZXJ2aWNlIGFib3V0IGNvbnRyaWJ1dGlvbnMgYXQgdGhpZXIgZmFjdWx0eSIsImNyZWF0ZWRBdCI6IjIwMjQtMDMtMjBUMTM6Mjc6NDIuOTQ5WiIsInVwZGF0ZWRBdCI6IjIwMjQtMDMtMjBUMTM6Mjc6NDIuOTQ5WiIsIl9fdiI6MH19LCJpYXQiOjE3MTE2MjY0MjZ9.d3F3AxmAAh_yzJuvBh5_2SwlNeMmQdU8f9phQScKYn8");
+    //let decoded = jwtAction.verifyToken(cookies);
     const user_id = decoded.id;
     console.log(user_id);
 
