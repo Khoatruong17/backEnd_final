@@ -7,9 +7,10 @@ const Login = async (req, res) => {
     let data = await registerLoginService.UserLogin(req.body);
     //set cookie
     res.cookie("jwt", data.DT.access_token, {
-      maxAge: 60 * 60 * 1000, // set time for cookie
+      maxAge: 60 * 60 * 1000, // Set time for cookie
       domain: "https://vue-project-tu.vercel.app",
-      httpOnly: true, // only use from server
+      httpOnly: true, // Only use from server
+      path: "/", // Set path for the cookie
     });
     console.log(">>> Token: ", data.DT.access_token);
     return res.status(200).json({
