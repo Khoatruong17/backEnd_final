@@ -26,7 +26,7 @@ configViewEngine(app);
 // Setup routes
 apiRouter(app);
 
-// CORS setup (Moved up before any routes)
+// z setup (Moved up before any routes)
 // app.use(function (req, res, next) {
 //   res.header(
 //     "Access-Control-Allow-Origin",
@@ -47,10 +47,15 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Origin",
     "https://vue-project-tu.vercel.app"
   );
-  res.header(
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+  res.setHeader(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "X-Requested-With",
+    "content-type"
   );
+
+  res.setHeader("Access-Control-Allow-Credential", true);
   next();
 });
 
