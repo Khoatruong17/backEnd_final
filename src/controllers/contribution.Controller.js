@@ -89,6 +89,7 @@ const createContribution = async (req, res) => {
       return res.status(400).send("No files were uploaded.");
     }
     let cookie = req.cookies;
+    console.log("Bat loi cookie", cookie);
     if (!cookie || cookie.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
