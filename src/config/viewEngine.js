@@ -12,7 +12,7 @@ const configViewEngine = (app) => {
   app.use(
     cors({
       //origin: "https://vue-project-tu.vercel.app",
-      origin: "*",
+      origin: "https://vue-project-tu.vercel.app",
       credentials: true,
     })
   );
