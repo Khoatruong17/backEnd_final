@@ -47,11 +47,11 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Origin",
     "https://vue-project-tu.vercel.app"
   );
-
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
