@@ -9,13 +9,13 @@ const configViewEngine = (app) => {
   app.set("view engine", "ejs");
   //config static files
   app.use(express.static(path.join("./src", "public")));
-  // app.use(
-  //   cors({
-  //     //origin: "https://vue-project-tu.vercel.app",
-  //     origin: "https://vue-project-tu.vercel.app",
-  //     credentials: true,
-  //   })
-  // );
+  app.use(
+    cors({
+      //origin: "https://vue-project-tu.vercel.app",
+      origin: "https://vue-project-tu.vercel.app",
+      credentials: true,
+    })
+  );
   app.use(cookieParser());
   app.use(express.json());
   app.use(bodyParser.json());
