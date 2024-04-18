@@ -93,6 +93,7 @@ const createContribution = async (req, res) => {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
     const decoded = jwtAction.verifyToken(cookie.jwt);
+    console.log("Bat loi", cookie.jwt);
     if (!decoded) {
       return res.status(400).send("Invalid cookie. Please Login!!!");
     }
