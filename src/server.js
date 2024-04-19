@@ -20,7 +20,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(fileUpload());
 const corsOptions = {
-  origin: ["http://127.0.0.1:5173", "https://vue-project-tu.vercel.app"],
+  origin: [
+    "http://127.0.0.1:5173",
+    "https://vue-project-tu.vercel.app",
+    "http://localhost:5173",
+  ],
   //origin: "https://vue-project-tu-1.onrender.com", // or a function returning this value based on request
   methods: "GET, POST, PUT, DELETE, OPTIONS",
   allowedHeaders: "X-Requested-With, Content-Type",
