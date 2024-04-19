@@ -10,6 +10,7 @@ const morgan = require("morgan");
 const apiRouter = require("./routers/api.Router");
 const configViewEngine = require("./config/viewEngine");
 const connection = require("./config/database");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = process.env.PORT || 10000;
@@ -17,9 +18,11 @@ const port = process.env.PORT || 10000;
 // Middleware
 app.use(morgan("dev")); // Logging middleware
 app.use(bodyParser.json());
+app.use(cookieParser());
 app.use(fileUpload());
 const corsOptions = {
-  origin: "https://vue-project-tu-1.onrender.com", // or a function returning this value based on request
+  origin: ["http://127.0.0.1:5173", "https://vue-project-tu-1.onrender.com"],
+  //origin: "https://vue-project-tu-1.onrender.com", // or a function returning this value based on request
   methods: "GET, POST, PUT, DELETE, OPTIONS",
   allowedHeaders: "X-Requested-With, Content-Type",
   credentials: true,
@@ -34,7 +37,6 @@ configViewEngine(app);
 
 // Setup routes
 apiRouter(app);
-
 // app.use(function (req, res, next) {
 //   res.header(
 //     "Access-Control-Allow-Origin",
