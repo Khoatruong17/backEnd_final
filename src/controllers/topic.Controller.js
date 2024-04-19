@@ -4,11 +4,16 @@ const jwtAction = require("../middleware/jwtAction");
 
 const createTopic = async (req, res) => {
   try {
-    const cookie = req.cookies;
-    if (!cookie || !cookie.jwt) {
+    const headers = req.headers;
+    const authorizationHeader = headers.authorization;
+    console.log("Authorization Header:", authorizationHeader);
+    if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
-    const decoded = jwtAction.verifyToken(cookie.jwt);
+    const decoded = jwtAction.verifyToken(authorizationHeader);
+    if (!decoded) {
+      return res.status(400).send("Invalid cookie. Please Login!!!");
+    }
     let data = await TopService.createNewTopic(req.body, decoded);
     return res.status(200).json({
       EM: data.EM,

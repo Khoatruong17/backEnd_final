@@ -81,15 +81,15 @@ const getAllUser = async (req, res) => {
 
 const editUser = async (req, res) => {
   try {
-    const cookie = req.cookies;
-    if (!cookie || !cookie.jwt) {
-      console.log("Could not find JWT cookie");
-      return res.status(401).json({
-        EM: "You need to login",
-        EC: 1,
-        DT: "",
-      });
-    }
+    // const cookie = req.cookies;
+    // if (!cookie || !cookie.jwt) {
+    //   console.log("Could not find JWT cookie");
+    //   return res.status(401).json({
+    //     EM: "You need to login",
+    //     EC: 1,
+    //     DT: "",
+    //   });
+    // }
     const { user_id, faculty_id, username } = req.body;
     const user = await UserModel.findById(user_id);
     if (!user) {

@@ -280,12 +280,6 @@ const showcontributionbyFaculty = async (req, res) => {
 const showcontributionForStudent = async (req, res) => {
   try {
     const headers = req.headers;
-    console.log(">>> Headers:", headers);
-
-    for (const header in headers) {
-      console.log(header + ": " + headers[header]);
-    }
-
     const authorizationHeader = headers.authorization;
     console.log("Authorization Header:", authorizationHeader);
     if (!authorizationHeader || authorizationHeader.length === 0) {
