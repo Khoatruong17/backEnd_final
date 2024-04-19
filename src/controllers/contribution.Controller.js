@@ -101,77 +101,76 @@ const createContribution = async (req, res) => {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
     const decoded = jwtAction.verifyToken(authorizationHeader);
-    // console.log("Bat loi", cookie.jwt);
-    // if (!decoded) {
-    //   return res.status(400).send("Invalid cookie. Please Login!!!");
-    // }
-    // const student_id = decoded.id;
+    if (!decoded) {
+      return res.status(400).send("Invalid cookie. Please Login!!!");
+    }
+    const student_id = decoded.id;
 
-    // const student = await User.findById(student_id);
-    // if (!student) {
-    //   throw new Error(
-    //     "Student not found, please check token (take student_id by token)"
-    //   );
-    // }
-    // const faculty_id = student.faculty.faculty_id;
-    // if (!faculty_id) {
-    //   throw new Error("The user does not have faculty_id, please check again");
-    // }
+    const student = await User.findById(student_id);
+    if (!student) {
+      throw new Error(
+        "Student not found, please check token (take student_id by token)"
+      );
+    }
+    const faculty_id = student.faculty.faculty_id;
+    if (!faculty_id) {
+      throw new Error("The user does not have faculty_id, please check again");
+    }
 
-    // const topic_id = req.body.topic_id;
-    // const topic = await Topic.findById(topic_id);
-    // if (!topic) {
-    //   throw new Error("Topic not found, please check topic_id");
-    // }
-    // const deadline = new Date(topic.end_date);
-    // if (deadline < new Date()) {
-    //   throw new Error(
-    //     "The deadline has passed, you can't submit your contribution anymore."
-    //   );
-    // }
-    // const email = "namdhgch190700@fpt.edu.vn";
+    const topic_id = req.body.topic_id;
+    const topic = await Topic.findById(topic_id);
+    if (!topic) {
+      throw new Error("Topic not found, please check topic_id");
+    }
+    const deadline = new Date(topic.end_date);
+    if (deadline < new Date()) {
+      throw new Error(
+        "The deadline has passed, you can't submit your contribution anymore."
+      );
+    }
+    const email = "namdhgch190700@fpt.edu.vn";
 
-    // const filePath = await uploadFile.postUploadMultipleFiles(req);
-    // let documents = [];
-    // let countSuccess;
-    // console.log(filePath);
-    // if (Array.isArray(filePath.detail)) {
-    //   documents = filePath.detail.map((detail) => detail.path);
-    //   countSuccess = filePath.countSuccess;
-    // } else if (filePath.DT.path) {
-    //   documents = filePath.DT.path;
-    //   countSuccess = 1;
-    // } else {
-    //   console.error("filePath.detail or filePath.path is not available.");
-    //   return res.status(400).send("Invalid file upload data.");
-    // }
-    // const currentDate = new Date();
+    const filePath = await uploadFile.postUploadMultipleFiles(req);
+    let documents = [];
+    let countSuccess;
+    console.log(filePath);
+    if (Array.isArray(filePath.detail)) {
+      documents = filePath.detail.map((detail) => detail.path);
+      countSuccess = filePath.countSuccess;
+    } else if (filePath.DT.path) {
+      documents = filePath.DT.path;
+      countSuccess = 1;
+    } else {
+      console.error("filePath.detail or filePath.path is not available.");
+      return res.status(400).send("Invalid file upload data.");
+    }
+    const currentDate = new Date();
 
-    // console.log(">>> File Path", documents);
-    // //console.log({filePath,currentDate,student_id,topic_id});
-    // const newContribution = new Contributions({
-    //   user_id: student_id,
-    //   topic_id: topic_id,
-    //   topic_name: topic.name,
-    //   faculty_id: faculty_id,
-    //   name: req.body.name,
-    //   description: req.body.description,
-    //   document: documents,
-    //   submit_date: currentDate,
-    //   status: 0,
-    // });
-    // const contribution = await newContribution.save();
-    // if (contribution) {
-    //   const user = await User.findById(student_id);
-    //   let text = `The student "${user.email}" upload ${countSuccess} contribution to the system`;
-    //   let email_status = await sendEmailMessage.sendEmail(email, text);
-    //   console.log(email_status);
-    // }
+    console.log(">>> File Path", documents);
+    //console.log({filePath,currentDate,student_id,topic_id});
+    const newContribution = new Contributions({
+      user_id: student_id,
+      topic_id: topic_id,
+      topic_name: topic.name,
+      faculty_id: faculty_id,
+      name: req.body.name,
+      description: req.body.description,
+      document: documents,
+      submit_date: currentDate,
+      status: 0,
+    });
+    const contribution = await newContribution.save();
+    if (contribution) {
+      const user = await User.findById(student_id);
+      let text = `The student "${user.email}" upload ${countSuccess} contribution to the system`;
+      let email_status = await sendEmailMessage.sendEmail(email, text);
+      console.log(email_status);
+    }
 
-    // console.log("Add contribution Successfully");
+    console.log("Add contribution Successfully");
     return res.status(200).json({
       message: "Add contribution Successfully",
-      contribution: decoded, // Optionally, you can return the created contribution
+      contribution: contribution, // Optionally, you can return the created contribution
     });
   } catch (error) {
     console.log("Error create contribution --: " + error);
