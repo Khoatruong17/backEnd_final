@@ -19,7 +19,7 @@ app.use(morgan("dev")); // Logging middleware
 app.use(bodyParser.json());
 app.use(fileUpload());
 const corsOptions = {
-  origin: "https://vue-project-tu.vercel.app", // or a function returning this value based on request
+  origin: "https://vue-project-tu-1.onrender.com", // or a function returning this value based on request
   methods: "GET, POST, PUT, DELETE, OPTIONS",
   allowedHeaders: "X-Requested-With, Content-Type",
   credentials: true,
