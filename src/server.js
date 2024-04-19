@@ -10,7 +10,6 @@ const morgan = require("morgan");
 const apiRouter = require("./routers/api.Router");
 const configViewEngine = require("./config/viewEngine");
 const connection = require("./config/database");
-const cookieParser = require("cookie-parser");
 
 const app = express();
 const port = process.env.PORT || 10000;
