@@ -203,11 +203,22 @@ const getAllContribution = async (req, res) => {
 
 const showcontributionbyFaculty = async (req, res) => {
   try {
-    const cookie = req.cookies;
-    if (!cookie.jwt || cookie.length === 0) {
+    const headers = req.headers;
+    console.log(">>> Headers:", headers);
+
+    for (const header in headers) {
+      console.log(header + ": " + headers[header]);
+    }
+
+    const authorizationHeader = headers.authorization;
+    console.log("Authorization Header:", authorizationHeader);
+    if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
-    const decoded = jwtAction.verifyToken(cookie.jwt);
+    const decoded = jwtAction.verifyToken(authorizationHeader);
+    if (!decoded) {
+      return res.status(400).send("Invalid cookie. Please Login!!!");
+    }
     const faculty_id = decoded.faculty_id;
     const faculty = await Faculty.findById(faculty_id);
     if (!faculty) {
@@ -268,11 +279,22 @@ const showcontributionbyFaculty = async (req, res) => {
 
 const showcontributionForStudent = async (req, res) => {
   try {
-    const cookie = req.cookies;
-    if (!cookie || !cookie.jwt) {
+    const headers = req.headers;
+    console.log(">>> Headers:", headers);
+
+    for (const header in headers) {
+      console.log(header + ": " + headers[header]);
+    }
+
+    const authorizationHeader = headers.authorization;
+    console.log("Authorization Header:", authorizationHeader);
+    if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
-    const decoded = jwtAction.verifyToken(cookie.jwt);
+    const decoded = jwtAction.verifyToken(authorizationHeader);
+    if (!decoded) {
+      return res.status(400).send("Invalid cookie. Please Login!!!");
+    }
     const faculty_id = decoded.faculty_id;
     const student_id = decoded.id;
     const faculty = await Faculty.findById(faculty_id);
@@ -324,11 +346,19 @@ const showcontributionForStudent = async (req, res) => {
 
 const showcontributionForGuest = async (req, res) => {
   try {
-    let cookie = req.cookies;
-    if (!cookie || cookie.length === 0) {
+    const headers = req.headers;
+    console.log(">>> Headers:", headers);
+
+    for (const header in headers) {
+      console.log(header + ": " + headers[header]);
+    }
+
+    const authorizationHeader = headers.authorization;
+    console.log("Authorization Header:", authorizationHeader);
+    if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
-    const decoded = jwtAction.verifyToken(cookie.jwt);
+    const decoded = jwtAction.verifyToken(authorizationHeader);
     if (!decoded) {
       return res.status(400).send("Invalid cookie. Please Login!!!");
     }
