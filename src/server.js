@@ -20,7 +20,11 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(fileUpload());
 const corsOptions = {
-  origin: ["http://127.0.0.1:5173", "https://vue-project-tu-1.onrender.com"],
+  origin: [
+    "http://127.0.0.1:5173",
+    "https://vue-project-tu-1.onrender.com",
+    "https://frontend-group1.onrender.com/",
+  ],
   //origin: "https://vue-project-tu-1.onrender.com", // or a function returning this value based on request
   methods: "GET, POST, PUT, DELETE, OPTIONS",
   allowedHeaders: "X-Requested-With, Content-Type",
