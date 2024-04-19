@@ -88,9 +88,15 @@ const createContribution = async (req, res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send("No files were uploaded.");
     }
-    const authorizationHeader = req.headers["Authorization"];
-    console.log(">>> Headers: " + req.headers);
-    console.log("Bat loi cookie", authorizationHeader);
+    const headers = req.headers;
+    console.log(">>> Headers:", headers);
+
+    for (const header in headers) {
+      console.log(header + ": " + headers[header]);
+    }
+
+    const authorizationHeader = headers["Authorization"];
+    console.log("Authorization Header:", authorizationHeader);
     if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
