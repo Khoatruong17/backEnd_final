@@ -95,7 +95,7 @@ const createContribution = async (req, res) => {
       console.log(header + ": " + headers[header]);
     }
 
-    const authorizationHeader = headers["Authorization"];
+    const authorizationHeader = headers.authorization;
     console.log("Authorization Header:", authorizationHeader);
     if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
