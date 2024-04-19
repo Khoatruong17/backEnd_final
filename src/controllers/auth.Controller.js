@@ -10,8 +10,8 @@ const Login = async (req, res) => {
       maxAge: 60 * 60 * 1000, // Set time for cookie
       //domain: "https://vue-project-tu.vercel.app",
       httpOnly: true, // Only use from server
-      secure: true, // Only use with HTTPS
-      sameSite: "none", // Allow the cookie to be sent in cross-site requests
+      secure: false, // Only use with HTTPS
+      sameSite: "Lax", // Allow the cookie to be sent in cross-site requests
       path: "/", // Set path for the cookie
     });
     console.log(">>> Token: ", data.DT.access_token);

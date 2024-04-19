@@ -182,18 +182,6 @@ const UserLogin = async (rawData) => {
         DT: "",
       };
     }
-
-    // Check if password length is between 8 and 10
-
-    // Check if email length is between 50 and 255
-    // if (rawData.email.length < 10 || rawData.email.length > 55) {
-    //   return {
-    //     EM: "Email must be between 50 and 255 characters",
-    //     EC: 1,
-    //     DT: "",
-    //   };
-    // }
-
     const isEmail = validator.isEmail(rawData.email);
     if (isEmail) {
       let user = await User.findOne({ email: rawData.email });
