@@ -9,7 +9,7 @@ const Login = async (req, res) => {
     res.cookie("jwt", data.DT.access_token, {
       maxAge: 60 * 60 * 1000, // Set time for cookie
       domain: "https://vue-project-tu.vercel.app",
-      httpOnly: true, // Only use from server
+      httpOnly: false,
       secure: false, // Only use with HTTPS
       sameSite: "Lax", // Allow the cookie to be sent in cross-site requests
       path: "/", // Set path for the cookie
