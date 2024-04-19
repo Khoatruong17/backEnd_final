@@ -89,6 +89,7 @@ const createContribution = async (req, res) => {
       return res.status(400).send("No files were uploaded.");
     }
     const authorizationHeader = req.headers["Authorization"];
+    console.log(">>> Headers: " + req.headers);
     console.log("Bat loi cookie", authorizationHeader);
     if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
