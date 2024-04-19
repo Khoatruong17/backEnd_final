@@ -18,7 +18,16 @@ const port = process.env.PORT || 10000;
 app.use(morgan("dev")); // Logging middleware
 app.use(bodyParser.json());
 app.use(fileUpload());
-app.use(cors()); // Place CORS middleware here
+const corsOptions = {
+  origin: "https://vue-project-tu.vercel.app", // or a function returning this value based on request
+  methods: "GET, POST, PUT, DELETE, OPTIONS",
+  allowedHeaders: "X-Requested-With, Content-Type",
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+app.options("*", cors(corsOptions));
 
 // Set view engine
 configViewEngine(app);
@@ -26,34 +35,18 @@ configViewEngine(app);
 // Setup routes
 apiRouter(app);
 
-// z setup (Moved up before any routes)
 // app.use(function (req, res, next) {
 //   res.header(
 //     "Access-Control-Allow-Origin",
 //     "https://vue-project-tu.vercel.app"
 //   );
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
 
-//   res.header("Access-Control-Allow-Credentials", "true");
+//   res.header("Access-Control-Allow-Credentials", true);
 //   next();
 // });
-
-app.use(function (req, res, next) {
-  res.header(
-    "Access-Control-Allow-Origin",
-    "https://vue-project-tu.vercel.app"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-
-  res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-
-  res.header("Access-Control-Allow-Credentials", true);
-  next();
-});
 
 // 404 handler
 app.use((req, res) => {
