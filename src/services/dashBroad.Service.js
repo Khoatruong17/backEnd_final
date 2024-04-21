@@ -515,12 +515,12 @@ const dashBroadCoordinator = async (rawData, decoded) => {
             });
           }
         }
-
-        result[`Week ${week}`] = {
+        result.push({
+          week: `Week ${week}`,
           sumOfContribution: contributionCount,
           percentTopic,
           details,
-        };
+        });
       }
 
       return {
