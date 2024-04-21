@@ -408,12 +408,12 @@ const dashBroadCoordinator = async (rawData, decoded) => {
             });
           }
         }
-
-        result[`Month ${month}`] = {
+        result.push({
+          month: `Month ${month}`,
           sumOfContribution: contributionCount,
           percentTopic,
           details,
-        };
+        });
       }
 
       return {
