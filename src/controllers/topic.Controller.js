@@ -1,6 +1,7 @@
 const TopicModel = require("../models/topicModel");
 const TopService = require("../services/topic.Service");
 const jwtAction = require("../middleware/jwtAction");
+const facultyModel = require("../models/facultyModel");
 
 const createTopic = async (req, res) => {
   try {
@@ -69,8 +70,49 @@ const deletedTopic = async (req, res) => {
   }
 };
 
+const showTopicbyFaculty = async (req, res) => {
+  try {
+    const headers = req.headers;
+    console.log(">>> Headers:", headers);
+
+    for (const header in headers) {
+      console.log(header + ": " + headers[header]);
+    }
+
+    const authorizationHeader = headers.authorization;
+    console.log("Authorization Header:", authorizationHeader);
+    if (!authorizationHeader || authorizationHeader.length === 0) {
+      return res.status(400).send("No cookies found. Please Login!!!");
+    }
+    const decoded = jwtAction.verifyToken(authorizationHeader);
+    if (!decoded) {
+      return res.status(400).send("Invalid cookie. Please Login!!!");
+    }
+    const faculty_id = decoded.faculty_id;
+    const faculty = await facultyModel.findById(faculty_id);
+    if (!faculty) {
+      throw new Error("Faculty not found, please check faculty_id");
+    }
+    const topic = await TopicModel.find({
+      faculty_id: faculty._id,
+    });
+    return res.status(200).json({
+      EM: "get Topic by Faculty success",
+      EC: "0",
+      DT: topic,
+    });
+  } catch (error) {
+    console.log(">> get Topic by Faculty fail: ", error);
+    return res.status(500).json({
+      EM: "get Topic by Faculty fail",
+      EC: "-1",
+    });
+  }
+};
+
 module.exports = {
   createTopic,
   getAllTopic,
   deletedTopic,
+  showTopicbyFaculty,
 };
