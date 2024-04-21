@@ -107,11 +107,12 @@ const dashBroadAdminService = async (rawData) => {
           }
         }
 
-        result[`Month ${month}`] = {
+        result.push({
+          month: `Month ${month}`,
           sumOfContribution: contributionCount,
-          percentFaculty,
+          percentTopic,
           details,
-        };
+        });
       }
 
       return {
@@ -266,14 +267,16 @@ const dashBroadAdminService = async (rawData) => {
         const uniqueContributors = await ContributionModel.distinct("user_id", {
           faculty_id: item._id,
         });
-        const contributionsNoComments = await ContributionModel.countDocuments({
-          comments: { $size: 0 },
-        });
-        const contributionsNoRecentComments =
-          await ContributionModel.countDocuments({
-            "comments.createdAt": { $lte: twoWeeksAgo },
-            comments: { $size: 0 },
-          });
+        const contributionsNoComments = contributionByFaculty.filter(
+          (contribution) => contribution.comments.length === 0
+        ).length;
+        const contributionsNoRecentComments = contributionByFaculty.filter(
+          (contribution) =>
+            contribution.comments.length === 0 ||
+            contribution.comments.every(
+              (comment) => new Date(comment.createdAt) <= twoWeeksAgo
+            )
+        ).length;
         details.push({
           faculty_name: item.faculty_name,
           contribution_count: contributionByFaculty,
