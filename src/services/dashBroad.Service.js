@@ -393,7 +393,6 @@ const dashBroadCoordinator = async (rawData, decoded) => {
             ).length;
             const contributionsNoRecentComments = contributionByTopic.filter(
               (contribution) =>
-                contribution.comments.length === 0 ||
                 contribution.comments.every(
                   (comment) => new Date(comment.createdAt) <= twoWeeksAgo
                 )
