@@ -369,6 +369,7 @@ const showcontributionForGuest = async (req, res) => {
     }
     const contributionsFiltered = contribution.map((contribution) => {
       return {
+        _id: contribution._id,
         topic_name: contribution.topic_name,
         name: contribution.name,
         description: contribution.description,
