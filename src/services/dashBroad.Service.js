@@ -248,28 +248,41 @@ const dashBroadAdminService = async (rawData) => {
     const contributionCount = await ContributionModel.countDocuments();
 
     for (const item of faculty) {
-      const contributionByFaculty = await ContributionModel.countDocuments({
-        faculty_id: item._id,
-      });
+      const contributionByFaculty = contributions.filter(
+        (contribution) =>
+          contribution.faculty_id.toString() === item._id.toString()
+      );
+
       const percentage = (
-        (contributionByFaculty / contributionCount) *
+        (contributionByFaculty.length / contributionCount) *
         100
       ).toFixed(2);
 
-      if (percentage && percentage !== "0.00") {
-        percentFaculty.push({
+      if (
+        percentage &&
+        percentage !== "0.00" &&
+        contributionByFaculty.length !== 0
+      ) {
+        weekData.percentFaculty.push({
           faculty_name: item.faculty_name,
           percent: percentage + "%",
         });
       }
 
-      if (contributionByFaculty > 0) {
-        const uniqueContributors = await ContributionModel.distinct("user_id", {
-          faculty_id: item._id,
-        });
+      if (contributionByFaculty.length > 0) {
+        const uniqueContributors = [
+          ...new Set(
+            contributionByFaculty.map((contribution) =>
+              contribution.user_id.toString()
+            )
+          ),
+        ];
         const contributionsNoComments = contributionByFaculty.filter(
           (contribution) => contribution.comments.length === 0
         ).length;
+        const twoWeeksAgo = new Date();
+        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+
         const contributionsNoRecentComments = contributionByFaculty.filter(
           (contribution) =>
             contribution.comments.length === 0 ||
@@ -277,9 +290,10 @@ const dashBroadAdminService = async (rawData) => {
               (comment) => new Date(comment.createdAt) <= twoWeeksAgo
             )
         ).length;
-        details.push({
+
+        weekData.details.push({
           faculty_name: item.faculty_name,
-          contribution_count: contributionByFaculty,
+          contribution_count: contributionByFaculty.length,
           unique_contributors: uniqueContributors.length,
           contributionsNoComments,
           contributionsNoRecentComments,
