@@ -107,12 +107,11 @@ const dashBroadAdminService = async (rawData) => {
           }
         }
 
-        result.push({
-          month: `Month ${month}`,
+        result[`Month ${month}`] = {
           sumOfContribution: contributionCount,
-          percentTopic,
+          percentFaculty,
           details,
-        });
+        };
       }
 
       return {
@@ -248,52 +247,36 @@ const dashBroadAdminService = async (rawData) => {
     const contributionCount = await ContributionModel.countDocuments();
 
     for (const item of faculty) {
-      const contributionByFaculty = contributions.filter(
-        (contribution) =>
-          contribution.faculty_id.toString() === item._id.toString()
-      );
-
+      const contributionByFaculty = await ContributionModel.countDocuments({
+        faculty_id: item._id,
+      });
       const percentage = (
-        (contributionByFaculty.length / contributionCount) *
+        (contributionByFaculty / contributionCount) *
         100
       ).toFixed(2);
 
-      if (
-        percentage &&
-        percentage !== "0.00" &&
-        contributionByFaculty.length !== 0
-      ) {
-        weekData.percentFaculty.push({
+      if (percentage && percentage !== "0.00") {
+        percentFaculty.push({
           faculty_name: item.faculty_name,
           percent: percentage + "%",
         });
       }
 
-      if (contributionByFaculty.length > 0) {
-        const uniqueContributors = [
-          ...new Set(
-            contributionByFaculty.map((contribution) =>
-              contribution.user_id.toString()
-            )
-          ),
-        ];
-        const contributionsNoComments = contributionByFaculty.filter(
-          (contribution) => contribution.comments.length === 0
-        ).length;
-        const twoWeeksAgo = new Date();
-        twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
-
-        const contributionsNoRecentComments = contributionByFaculty.filter(
-          (contribution) =>
-            contribution.comments.length === 0 ||
-            contribution.comments.every(
-              (comment) => new Date(comment.createdAt) <= twoWeeksAgo
-            )
-        ).length;
-
-        weekData.details.push({
+      if (contributionByFaculty > 0) {
+        const uniqueContributors = await ContributionModel.distinct("user_id", {
+          faculty_id: item._id,
+        });
+        const contributionsNoComments = await ContributionModel.countDocuments({
+          comments: { $size: 0 },
+        });
+        const contributionsNoRecentComments =
+          await ContributionModel.countDocuments({
+            "comments.createdAt": { $lte: twoWeeksAgo },
+            comments: { $size: 0 },
+          });
+        details.push({
           faculty_name: item.faculty_name,
-          contribution_count: contributionByFaculty.length,
+          contribution_count: contributionByFaculty,
           unique_contributors: uniqueContributors.length,
           contributionsNoComments,
           contributionsNoRecentComments,
@@ -410,6 +393,7 @@ const dashBroadCoordinator = async (rawData, decoded) => {
             ).length;
             const contributionsNoRecentComments = contributionByTopic.filter(
               (contribution) =>
+                contribution.comments.length === 0 ||
                 contribution.comments.every(
                   (comment) => new Date(comment.createdAt) <= twoWeeksAgo
                 )
@@ -531,12 +515,12 @@ const dashBroadCoordinator = async (rawData, decoded) => {
             });
           }
         }
-        result.push({
-          week: `Week ${week}`,
+
+        result[`Week ${week}`] = {
           sumOfContribution: contributionCount,
           percentTopic,
           details,
-        });
+        };
       }
 
       return {
