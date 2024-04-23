@@ -542,12 +542,10 @@ const dashBroadCoordinator = async (rawData, decoded) => {
         100
       ).toFixed(2);
 
-      if (percentage && percentage !== "0.00") {
-        percentTopic.push({
-          topic_name: item.name,
-          percent: percentage + "%",
-        });
-      }
+      percentTopic.push({
+        topic_name: item.name,
+        percent: percentage + "%",
+      });
     }
 
     if (contributionCount > 0) {
