@@ -303,15 +303,15 @@ const showcontributionForStudent = async (req, res) => {
 
     for (const item of contribution) {
       console.log(">>> Check", contribution);
-
+      console.log(">>> Check topic Id", item.topic_id);
       const topic = await Topic.findById(item.topic_id).exec();
-      if (!topic) {
-        throw new Error("Topic not found");
-      }
       const timeSubmit = timeSevice.convertToGMT7(
         item.submit_date.toISOString()
       );
-      const endDate = topic.end_date;
+      let endDate = null;
+      if (topic) {
+        endDate = topic.end_date;
+      }
       if (endDate) {
         const remainingTime = await timeRemainingStudent(
           endDate,
@@ -324,6 +324,7 @@ const showcontributionForStudent = async (req, res) => {
         });
       }
     }
+
     return res.status(200).json({
       EM: "success",
       EC: 0,
