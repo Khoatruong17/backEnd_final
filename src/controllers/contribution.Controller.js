@@ -220,6 +220,7 @@ const showcontributionbyFaculty = async (req, res) => {
       return res.status(400).send("Invalid cookie. Please Login!!!");
     }
     const faculty_id = decoded.faculty_id;
+    console.log("Faculty Id:", faculty_id);
     const faculty = await Faculty.findById(faculty_id);
     if (!faculty) {
       throw new Error("Faculty not found, please check faculty_id");
