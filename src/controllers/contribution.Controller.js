@@ -300,8 +300,10 @@ const showcontributionForStudent = async (req, res) => {
     if (!contribution) {
       throw new Error("Contribution not found (find by faculty_id)");
     }
-    console.log(">>> Check", decoded);
+
     for (const item of contribution) {
+      console.log(">>> Check", contribution);
+
       const topic = await Topic.findById(item.topic_id).exec();
       if (!topic) {
         throw new Error("Topic not found");
