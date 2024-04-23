@@ -216,6 +216,7 @@ const showcontributionbyFaculty = async (req, res) => {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
     const decoded = jwtAction.verifyToken(authorizationHeader);
+    console.log("Decoded Token:", decoded);
     if (!decoded) {
       return res.status(400).send("Invalid cookie. Please Login!!!");
     }
