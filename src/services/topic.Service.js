@@ -31,6 +31,15 @@ const createNewTopic = async (requestData, decoded) => {
     const user_id = decoded.id;
     console.log(user_id);
 
+    // Check if faculty_id exists in requestData
+    if (!requestData.faculty_id) {
+      console.log("Faculty ID is missing");
+      return {
+        EM: "Faculty ID is missing",
+        EC: "1",
+      };
+    }
+
     // check start-date
     if (!isValidStartDate(requestData.start_date)) {
       console.log(requestData.start_date);
