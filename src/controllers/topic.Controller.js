@@ -73,14 +73,7 @@ const deletedTopic = async (req, res) => {
 const showTopicbyFaculty = async (req, res) => {
   try {
     const headers = req.headers;
-    console.log(">>> Headers:", headers);
-
-    for (const header in headers) {
-      console.log(header + ": " + headers[header]);
-    }
-
     const authorizationHeader = headers.authorization;
-    console.log("Authorization Header:", authorizationHeader);
     if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
@@ -88,8 +81,10 @@ const showTopicbyFaculty = async (req, res) => {
     if (!decoded) {
       return res.status(400).send("Invalid cookie. Please Login!!!");
     }
+
     const faculty_id = decoded.faculty_id;
     const faculty = await facultyModel.findById(faculty_id);
+    console.log(">>> Check : ", faculty);
     if (!faculty) {
       throw new Error("Faculty not found, please check faculty_id");
     }
