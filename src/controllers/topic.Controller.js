@@ -85,6 +85,7 @@ const showTopicbyFaculty = async (req, res) => {
     const faculty_id = decoded.faculty_id;
     const faculty = await facultyModel.findById(faculty_id);
     console.log(">>> Check Khoa: ", faculty);
+    console.log(">>> Check Khoa: ", faculty._id);
     if (!faculty) {
       throw new Error("Faculty not found, please check faculty_id");
     }
