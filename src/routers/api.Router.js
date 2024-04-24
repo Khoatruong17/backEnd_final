@@ -103,7 +103,7 @@ const initApiRouter = (app) => {
 
   // topic router
   routerAPI.post("/topic/create", topicController.createTopic);
-  routerAPI.get("/topic/readAll", topicController.getAllTopic);
+  //routerAPI.get("/topic/readAll", topicController.getAllTopic);
   routerAPI.get("/topic/readbyFaculty", topicController.showTopicbyFaculty);
   routerAPI.delete("/topic/delete/:id", topicController.deletedTopic);
 
