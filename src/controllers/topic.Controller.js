@@ -84,13 +84,15 @@ const showTopicbyFaculty = async (req, res) => {
 
     const faculty_id = decoded.faculty_id;
     const faculty = await facultyModel.findById(faculty_id);
-    console.log(">>> Check : ", faculty);
+    console.log(">>> Check Khoa: ", faculty);
     if (!faculty) {
       throw new Error("Faculty not found, please check faculty_id");
     }
+
     const topic = await TopicModel.find({
       faculty_id: faculty._id,
     });
+    console.log(">>> Check Topic : ", topic);
     return res.status(200).json({
       EM: "get Topic by Faculty success",
       EC: "0",
