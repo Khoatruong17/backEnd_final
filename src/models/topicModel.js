@@ -5,7 +5,7 @@ const topicSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6,
-      maxlength: 20,
+      maxlength: 50,
       unique: true,
     },
     description: {
