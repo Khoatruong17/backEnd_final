@@ -103,7 +103,7 @@ const commentController = {
 
       if (comments.length === 0) {
         console.log("No comments have been found");
-        return res.status(404).json({ message: "No comments have been found" });
+        return res.status(200).json({ message: "No comments have been found" });
       }
 
       const formattedComments = [];

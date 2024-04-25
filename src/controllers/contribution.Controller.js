@@ -89,14 +89,7 @@ const createContribution = async (req, res) => {
       return res.status(400).send("No files were uploaded.");
     }
     const headers = req.headers;
-    console.log(">>> Headers:", headers);
-
-    for (const header in headers) {
-      console.log(header + ": " + headers[header]);
-    }
-
     const authorizationHeader = headers.authorization;
-    console.log("Authorization Header:", authorizationHeader);
     if (!authorizationHeader || authorizationHeader.length === 0) {
       return res.status(400).send("No cookies found. Please Login!!!");
     }
@@ -105,7 +98,6 @@ const createContribution = async (req, res) => {
       return res.status(400).send("Invalid cookie. Please Login!!!");
     }
     const student_id = decoded.id;
-
     const student = await User.findById(student_id);
     if (!student) {
       throw new Error(
@@ -116,7 +108,6 @@ const createContribution = async (req, res) => {
     if (!faculty_id) {
       throw new Error("The user does not have faculty_id, please check again");
     }
-
     const topic_id = req.body.topic_id;
     const topic = await Topic.findById(topic_id);
     if (!topic) {
@@ -128,7 +119,7 @@ const createContribution = async (req, res) => {
         "The deadline has passed, you can't submit your contribution anymore."
       );
     }
-    const email = "namdhgch190700@fpt.edu.vn";
+    const email = "truongndkgch190486@fpt.edu.vn";
 
     const filePath = await uploadFile.postUploadMultipleFiles(req);
     let documents = [];
@@ -145,9 +136,6 @@ const createContribution = async (req, res) => {
       return res.status(400).send("Invalid file upload data.");
     }
     const currentDate = new Date();
-
-    console.log(">>> File Path", documents);
-    //console.log({filePath,currentDate,student_id,topic_id});
     const newContribution = new Contributions({
       user_id: student_id,
       topic_id: topic_id,
@@ -167,7 +155,6 @@ const createContribution = async (req, res) => {
       console.log(email_status);
     }
 
-    console.log("Add contribution Successfully");
     return res.status(200).json({
       message: "Add contribution Successfully",
       contribution: contribution, // Optionally, you can return the created contribution
