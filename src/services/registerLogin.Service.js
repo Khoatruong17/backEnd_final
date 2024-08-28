@@ -60,6 +60,7 @@ const registerNewUser = async (req) => {
       let isEmailExists = await checkUsername(req.body.username);
       if (isEmailExists == true) {
         return {
+          status: 400,
           EM: "The username already exists",
           EC: 1,
         };
@@ -67,6 +68,7 @@ const registerNewUser = async (req) => {
       let isUsernameExists = await checkEmail(req.body.email);
       if (isUsernameExists == true) {
         return {
+          status: 400,
           EM: "The email already exists",
           EC: 1,
         };
@@ -74,6 +76,7 @@ const registerNewUser = async (req) => {
 
       if (!isPasswordStrong(req.body.password)) {
         return {
+          status: 400,
           EP: "Password needs 1 uppercase letter, 1 special character, 1 digit, and minimum 8 characters.",
           EC: 1,
         };
@@ -86,6 +89,7 @@ const registerNewUser = async (req) => {
       );
       if (!find_group) {
         return {
+          status: 404,
           EM: "Cannot find group",
           EC: 1,
         };
@@ -107,7 +111,8 @@ const registerNewUser = async (req) => {
         const find_faculty = await FacultyModel.findById(req.body.faculty_id);
         if (!find_faculty) {
           return {
-            EM: "Can't find Faculty",
+            status: 400,
+            EM: "Can't find Faculty by faculty_id",
             EC: 1,
           };
         }
@@ -121,14 +126,22 @@ const registerNewUser = async (req) => {
         const image = req.files.image;
         const allowedImageTypes = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
         if (!allowedImageTypes.test(path.extname(image.name))) {
-          throw new Error("Only image files are allowed (JPEG, JPG, PNG, GIF)");
+          return {
+            status: 400,
+            EM: "Only image files are allowed (JPEG, JPG, PNG, GIF)",
+            EC: 1,
+          };
         }
         try {
           let result_image = await uploadFile.uploadImageUser(image);
           if (result_image.EC === 0) {
             user.image = result_image.DT.path;
           } else {
-            throw new Error("An error occurred while uploading the image");
+            return {
+              status: 400,
+              EM: result_image,
+              EC: 1,
+            };
           }
         } catch (error) {
           console.log("Error uploading image:", error);
@@ -139,6 +152,7 @@ const registerNewUser = async (req) => {
         const result = await user.save();
         console.log(result);
         return {
+          status: 200,
           EM: "User created successfully",
           EC: 0,
           DT: result,

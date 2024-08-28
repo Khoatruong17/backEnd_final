@@ -3,6 +3,7 @@ const path = require("path");
 const uploadImageUser = async (image) => {
   if (!image || !image.name || typeof image.name !== "string") {
     return {
+      status: 400,
       EM: "Image information missing or invalid",
       EC: 1,
     };
@@ -12,6 +13,7 @@ const uploadImageUser = async (image) => {
   const allowedImageTypes = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
   if (!allowedImageTypes.test(path.extname(image.name))) {
     return {
+      status: 415,
       EM: "Only image files are allowed (JPEG, JPG, PNG, GIF)",
       EC: 1,
     };
@@ -28,6 +30,7 @@ const uploadImageUser = async (image) => {
   try {
     await image.mv(finalPath);
     return {
+      status: 200,
       EM: "Image uploaded successfully",
       EC: 0,
       DT: {
@@ -37,7 +40,8 @@ const uploadImageUser = async (image) => {
   } catch (error) {
     console.log("Error uploading image:", error);
     return {
-      EM: "An error occurred while uploading the image",
+      status: 500,
+      EM: "An error occurred while uploading the image: " + error.message,
       EC: 1,
     };
   }
@@ -46,6 +50,7 @@ const uploadImageUser = async (image) => {
 const uploadSingleFile = async (file) => {
   if (!file || typeof file.name !== "string") {
     return {
+      status: 400,
       EM: "File information missing or invalid",
       EC: 1,
     };
@@ -61,6 +66,7 @@ const uploadSingleFile = async (file) => {
   try {
     await file.mv(finalPath);
     return {
+      status: 200,
       EM: "File uploaded successfully",
       EC: 0,
       DT: {
@@ -70,7 +76,8 @@ const uploadSingleFile = async (file) => {
   } catch (error) {
     console.log(">> Check error (service single): " + error);
     return {
-      EM: "File upload failed ",
+      status: 500,
+      EM: "File upload failed: " + error.message,
       EC: 1,
     };
   }
@@ -108,13 +115,19 @@ const uploadMultipleFiles = async (file) => {
     }
 
     return {
-      countSuccess: countSuccess,
-      detail: resultArr,
+      status: 200,
+      EM: "Upload file successfully",
+      EC: 0,
+      DT: {
+        countSuccess: countSuccess,
+        detail: resultArr,
+      },
     };
   } catch (error) {
     console.log(">> Check error (service multiple): " + error);
     return {
-      EM: "File upload failed",
+      status: 500,
+      EM: "File upload failed" + error.message,
       EC: 1,
     };
   }

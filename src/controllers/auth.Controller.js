@@ -15,7 +15,7 @@ const Login = async (req, res) => {
       path: "/", // Set path for the cookie
     });
     console.log(">>> Token: ", data.DT.access_token);
-    return res.status(200).json({
+    return res.status(data.status).json({
       EM: data.EM, //create user success message
       EC: data.EC,
       DT: data.DT, //data
@@ -25,7 +25,7 @@ const Login = async (req, res) => {
     return res.status(500).json({
       EM: "error from server (controller)", //error message
       EC: "-1", //error code
-      DT: "", //data
+      DT: error, //data
     });
   }
 };
